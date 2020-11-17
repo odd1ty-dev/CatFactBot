@@ -35,8 +35,7 @@ def respond_with_facts():
     msg_txt=''
     cat_regex=re.compile(r'[Ss]end [Mm]e [Cc]at [Ff]acts')
 
-
-    if req['for_user_id'] == 359498984 and req['direct_message_events']:
+    if req['direct_message_events']:
         msg_txt = req['direct_message_events'][0]['message_create']['message_data']['text']
         user_id = str(req['direct_message_events'][0]['message_create']['sender_id'])
     
