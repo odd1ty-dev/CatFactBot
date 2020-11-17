@@ -30,7 +30,7 @@ def webhook_challenge():
 
 @app.route('/webhook/twitter',methods=['POST'])
 def respond_with_facts():
-    req=json.load(request.get_json())
+    req=json.loads(request.get_json())
     
     msg_txt=''
     cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
