@@ -1,9 +1,10 @@
-import requests,json
-from time import sleep
+import requests
+import json
 
-def retrieveCatfact(char = 150):
-    cat = requests.get(f'https://catfact.ninja/fact?max_length={char}')
-    sleep(1)
+
+def retrieveCatfact():
+    cat = requests.get('https://catfact.ninja/fact?max_length=150',verify=False)
+    
     fact = json.loads(cat.text)
     return fact['fact']
 
