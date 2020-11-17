@@ -30,10 +30,10 @@ def webhook_challenge():
 
 @app.route('/webhook/twitter',methods=['POST'])
 def respond_with_facts():
-    req=request.get_json()
-
+    req=json.load(request.get_json())
+    
     msg_txt=''
-    cat_regex=re.compile(r'[Ss]end [Mm]e [Cc]at [Ff]acts')
+    cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
 
     if req['direct_message_events']:
         msg_txt = req['direct_message_events'][0]['message_create']['message_data']['text']
@@ -41,7 +41,7 @@ def respond_with_facts():
     
     send_cats = cat_regex.search(msg_txt)
     if send_cats:
-        api.send_direct_message(user_id,catfacts.retrieveCatfact())
+        api.send_direct_message(user_id,catfacts.retrieveCatfact()+" Ny a~")
         
 
     return {'status_code':200}
