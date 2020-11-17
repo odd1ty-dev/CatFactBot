@@ -34,7 +34,7 @@ def respond_with_facts():
     msg_txt=''
     cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
 
-    if req['direct_message_events']:
+    if 'direct_message_events' in req.keys():
         msg_txt = req['direct_message_events'][0]['message_create']['message_data']['text']
         user_id = str(req['direct_message_events'][0]['message_create']['sender_id'])
     
