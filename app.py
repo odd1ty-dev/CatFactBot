@@ -42,6 +42,7 @@ def respond_with_facts():
     send_cats = cat_regex.search(msg_txt)
     if send_cats:
         api.send_direct_message(user_id,catfacts.retrieveCatfact())
+        
 
     return {'status_code':200}
 
