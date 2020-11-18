@@ -33,13 +33,13 @@ def webhook_challenge():
 def respond_with_facts():
     if validateRequest(request):
         continue
-    else
+    else:
         # res = {'message':"Unauthorized Access"}
         print("HEY OVER HERE, It didnt validate correctly.")
         sys.stdout.flush()
         return {'status_code':200}
 
-        
+
     req=request.get_json()
     msg_txt=''
     cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
