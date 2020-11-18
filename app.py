@@ -63,8 +63,8 @@ def validateRequest(request):
         payload_body = bytes(request.get_data(as_text=True),'utf-8')
         
         sha_256_digest = hmac.new(consumer_secret_bytes, payload_body , digestmod=hashlib.sha256).digest()
-
-        twitter_signature_b64 = bytes(base64.b64encode(twitter_signature).decode('utf-8'),'utf-8')
+        consumer_payload = base64.b64encode(sha_256_digest)
+        twitter_signature_b64 = base64.b64encode(twitter_signature)
         comparison_result = hmac.compare_digest(sha_256_digest,twitter_signature_b64)
 
         print("HEY THIS IS THE COMPARISON RESULT",comparison_result)
