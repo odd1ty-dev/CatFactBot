@@ -64,7 +64,7 @@ def validateRequest(request):
 
         consumer_payload_hash = "sha256="+base64.b64encode(sha_256_digest).decode('utf-8')
 
-        if comparison_result = hmac.compare_digest(consumer_payload_hash,twitter_signature):
+        if hmac.compare_digest(consumer_payload_hash,twitter_signature):
             return True
         else:
             return False
