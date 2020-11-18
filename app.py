@@ -67,7 +67,7 @@ def validateRequest(request):
         consumer_payload_hash = "sha256="+base64.b64encode(sha_256_digest).decode('utf-8')
         # twitter_signature_b64 = base64.b64encode(twitter_signature).decode('utf-8')
 
-        comparison_result = (consumer_payload_b64==twitter_signature)
+        comparison_result = (consumer_payload_hash==twitter_signature)
 
         print("HEY THIS IS THE COMPARISON RESULT",comparison_result,consumer_payload_hash,twitter_signature)
         sys.stdout.flush()
