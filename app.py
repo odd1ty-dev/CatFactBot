@@ -32,27 +32,22 @@ def webhook_challenge():
 @app.route('/webhook/twitter',methods=['POST'])
 def respond_with_facts():
     if validateRequest(request):
-        continue
+        req=request.get_json()
+        cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
+
+        if 'direct_message_events' in req.keys():
+            msg_txt = req['direct_message_events'][0]['message_create']['message_data']['text']
+            user_id = str(req['direct_message_events'][0]['message_create']['sender_id'])
+    
+        send_cats = cat_regex.search(msg_txt)
+        if send_cats:
+            api.send_direct_message(user_id,catfacts.retrieveCatfact()+" Nya~")
     else:
         # res = {'message':"Unauthorized Access"}
         print("HEY OVER HERE, It didnt validate correctly.")
         sys.stdout.flush()
-        return {'status_code':200}
-
-
-    req=request.get_json()
-    msg_txt=''
-    cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
-
-    if 'direct_message_events' in req.keys():
-        msg_txt = req['direct_message_events'][0]['message_create']['message_data']['text']
-        user_id = str(req['direct_message_events'][0]['message_create']['sender_id'])
-    
-    send_cats = cat_regex.search(msg_txt)
-    if send_cats:
-        api.send_direct_message(user_id,catfacts.retrieveCatfact()+" Nya~")
+        # return{(res,401)}
         
-
     return {'status_code':200}
 
 @app.route('/')
@@ -70,10 +65,15 @@ def validateRequest():
         sha_256_digest = hmac.new(consumer_secret_bytes, payload_body , digestmod=hashlib.sha256).digest()
 
         twitter_signature_b64 = base64.b64encode(twitter_signature).decode('utf-8')
-        if hmac.compare_digest(sha_256_digest,twitter_signature_b64):
-            return true
+        comparison_result = hmac.compare_digest(sha_256_digest,twitter_signature_b64)
+
+        print(compared)
+        sys.stdout.flush()
+        
+        if comparison_result:
+            return True
         else:
-            return false
+            return False
 
 
 if __name__=='__main__':
