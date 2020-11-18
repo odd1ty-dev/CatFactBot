@@ -69,7 +69,7 @@ def validateRequest(request):
 
         comparison_result = (consumer_payload_b64==twitter_signature_b64)
 
-        print("HEY THIS IS THE COMPARISON RESULT",comparison_result)
+        print("HEY THIS IS THE COMPARISON RESULT",comparison_result,consumer_payload_b64,twitter_signature_b64)
         sys.stdout.flush()
 
         if comparison_result:
