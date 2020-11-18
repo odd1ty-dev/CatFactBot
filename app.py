@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 from decouple import config
 import base64
 import hashlib
@@ -7,6 +7,7 @@ import json
 import re
 import api_config #local
 import catfacts #local
+import sys
 
 app = Flask(__name__)
 api= api_config.create_api()
@@ -30,6 +31,14 @@ def webhook_challenge():
 
 @app.route('/webhook/twitter',methods=['POST'])
 def respond_with_facts():
+    # if validateRequest(request):
+    #     continue
+    # else
+    #     res = {'message':"Unauthorized Access"}
+    #     return (jsonify(res),401)
+
+    print(request)
+    sys.stdout.flush()
     req=request.get_json()
     msg_txt=''
     cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
@@ -48,6 +57,22 @@ def respond_with_facts():
 @app.route('/')
 def index():
     return f"<h3>Welcome to Cat Facts!</h3>"
+
+def validateRequest():
+    req_headers = request.headers
+    if req_headers.has_key('x-twitter-webhooks-signature'):
+        twitter_signature = re.sub('sha256=','',req_headers['x-twitter-webhooks-signature'])
+
+        consumer_secret_bytes = bytes(CONSUMER_SECRET,'utf-8')
+        payload_body = bytes(request.get_data(as_text=True),'utf-8')
+        
+        sha_256_digest = hmac.new(consumer_secret_bytes, payload_body , digestmod=hashlib.sha256).digest()
+
+        twitter_signature_b64 = base64.b64encode(twitter_signature).decode('utf-8')
+        if hmac.compare_digest(sha_256_digest,twitter_signature_b64):
+            return true
+        else
+            return false
 
 
 if __name__=='__main__':
