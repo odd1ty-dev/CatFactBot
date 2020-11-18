@@ -31,14 +31,15 @@ def webhook_challenge():
 
 @app.route('/webhook/twitter',methods=['POST'])
 def respond_with_facts():
-    # if validateRequest(request):
-    #     continue
-    # else
-    #     res = {'message':"Unauthorized Access"}
-    #     return (jsonify(res),401)
+    if validateRequest(request):
+        continue
+    else
+        # res = {'message':"Unauthorized Access"}
+        print("HEY OVER HERE, It didnt validate correctly.")
+        sys.stdout.flush()
+        return {'status_code':200}
 
-    print("HEY OVER HERE",request.headers)
-    sys.stdout.flush()
+        
     req=request.get_json()
     msg_txt=''
     cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
