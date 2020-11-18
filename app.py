@@ -60,7 +60,7 @@ def validateRequest(request):
         twitter_signature = bytes(re.sub('sha256=','',req_headers['x-twitter-webhooks-signature']),'utf-8')
 
         consumer_secret_bytes = bytes(CONSUMER_SECRET,'utf-8')
-        payload_body = bytes(request.body,'utf-8')
+        payload_body = bytes(request.data,'utf-8')
         print("THIS IS 'PAYLOAD BODY '", request.get_data(as_text=True))
         sha_256_digest = hmac.new(consumer_secret_bytes, payload_body , digestmod=hashlib.sha256).digest()
         consumer_payload = base64.b64encode(sha_256_digest)
