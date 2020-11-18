@@ -37,7 +37,7 @@ def respond_with_facts():
     #     res = {'message':"Unauthorized Access"}
     #     return (jsonify(res),401)
 
-    print("HEY OVER HERE",request,request.get_data())
+    print("HEY OVER HERE",request.headers)
     sys.stdout.flush()
     req=request.get_json()
     msg_txt=''
