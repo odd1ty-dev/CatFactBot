@@ -54,7 +54,7 @@ def respond_with_facts():
 def index():
     return f"<h3>Welcome to Cat Facts!</h3>"
 
-def validateRequest():
+def validateRequest(request):
     req_headers = request.headers
     if req_headers.has_key('x-twitter-webhooks-signature'):
         twitter_signature = re.sub('sha256=','',req_headers['x-twitter-webhooks-signature'])
@@ -69,7 +69,7 @@ def validateRequest():
 
         print(compared)
         sys.stdout.flush()
-        
+
         if comparison_result:
             return True
         else:
