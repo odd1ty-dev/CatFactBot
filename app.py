@@ -7,7 +7,6 @@ import json
 import re
 import api_config #local
 import catfacts #local
-import sys
 
 app = Flask(__name__)
 api= api_config.create_api()
@@ -37,17 +36,15 @@ def respond_with_facts():
         send_cats=False
 
         if 'direct_message_events' in req.keys():
-            msg_txt = req['direct_message_events'][0]['message_create']['message_data']['text']
+            msg_txt = str(req['direct_message_events'][0]['message_create']['message_data']['text'])
             user_id = str(req['direct_message_events'][0]['message_create']['sender_id'])
             send_cats = cat_regex.search(msg_txt)
         
-        if send_cats:
+        if user_id != '359498984' and send_cats:
             api.send_direct_message(user_id,catfacts.retrieveCatfact()+" Nya~")
     else:
-        # res = {'message':"Unauthorized Access"}
-        print("HEY OVER HERE, It didnt validate correctly.")
-        sys.stdout.flush()
-        # return{(res,401)}
+        res = {'message':"Unauthorized Access"}
+        return Response(res,status=401)
         
     return {'status_code':200}
 
@@ -60,7 +57,6 @@ def validateRequest(request):
     if req_headers.has_key('x-twitter-webhooks-signature'):
 
         twitter_signature = req_headers['x-twitter-webhooks-signature'] 
-        
         consumer_secret_bytes = bytes(CONSUMER_SECRET,'utf-8') 
         payload_body = bytes(request.get_data(as_text=True),'utf-8')
 
@@ -68,12 +64,7 @@ def validateRequest(request):
 
         consumer_payload_hash = "sha256="+base64.b64encode(sha_256_digest).decode('utf-8')
 
-        comparison_result = hmac.compare_digest(consumer_payload_hash,twitter_signature)
-
-        print("HEY THIS IS THE COMPARISON RESULT",comparison_result,consumer_payload_hash,twitter_signature)
-        sys.stdout.flush()
-
-        if comparison_result:
+        if comparison_result = hmac.compare_digest(consumer_payload_hash,twitter_signature):
             return True
         else:
             return False
