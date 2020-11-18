@@ -57,7 +57,7 @@ def index():
 def validateRequest(request):
     req_headers = request.headers
     if req_headers.has_key('x-twitter-webhooks-signature'):
-        twitter_signature = bytes(req_headers['x-twitter-webhooks-signature']) #"sha256=lkasjdlksakdljkdsadsa"
+        twitter_signature = bytes(req_headers['x-twitter-webhooks-signature'],'utf-8') #"sha256=lkasjdlksakdljkdsadsa"
         
         consumer_secret_bytes = bytes(CONSUMER_SECRET,'utf-8') 
         payload_body = bytes(request.get_data(as_text=True),'utf-8')
