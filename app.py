@@ -34,6 +34,7 @@ def respond_with_facts():
         req=request.get_json()
         cat_regex=re.compile(r'[Ss][Ee][Nn][Dd] [Mm][Ee] [Cc][Aa][Tt] [Ff][Aa][Cc][Tt][Ss]')
         send_cats=False
+        user_id = ''
 
         if 'direct_message_events' in req.keys():
             msg_txt = str(req['direct_message_events'][0]['message_create']['message_data']['text'])
