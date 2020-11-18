@@ -71,7 +71,7 @@ def validateRequest():
         twitter_signature_b64 = base64.b64encode(twitter_signature).decode('utf-8')
         if hmac.compare_digest(sha_256_digest,twitter_signature_b64):
             return true
-        else
+        else:
             return false
 
 
