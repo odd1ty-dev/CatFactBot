@@ -34,4 +34,4 @@ def subscribe_to_user_activity(url,twitter):
 
 if __name__ == '__main__':
     register_webhook(url,twitter,webhook_endpoint)
-    
+    subscribe_to_user_activity(url,twitter)
