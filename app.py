@@ -41,7 +41,7 @@ def respond_with_facts():
             user_id = str(req['direct_message_events'][0]['message_create']['sender_id'])
             send_cats = cat_regex.search(msg_txt)
         
-        if user_id != '359498984' and send_cats:
+        if user_id != 'user_id_number' and send_cats:
             api.send_direct_message(user_id,catfacts.retrieveCatfact()+" Nya~")
     else:
         res = {'message':"Unauthorized Access"}
