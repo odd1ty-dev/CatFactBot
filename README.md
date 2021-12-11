@@ -1,6 +1,6 @@
 # CatFactBot
 Twitter Chatbot that answers with a random cat facts whenever activated. 
-The idea was making a Chatbot that worked using webhooks rather than using polling creater a more organic experience.
+The idea was making a Chatbot that worked using webhooks rather than using polling creating a more organic experience.
 
 The applications for it may vary, but the execution remains the same.
 
