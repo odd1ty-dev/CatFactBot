@@ -1,5 +1,5 @@
 from flask import Flask, request, Response, jsonify
-from decouple import config
+# from decouple import config
 import base64
 import hashlib
 import hmac 
@@ -7,14 +7,15 @@ import json
 import re
 import api_config #local
 import catfacts #local
+import os
 
 app = Flask(__name__)
 api= api_config.create_api()
 
-CONSUMER_KEY=config('consumer_key')
-CONSUMER_SECRET=config('consumer_secret')
-ACCESS_TOKEN=config('access_token')
-ACCESS_TOKEN_SECRET=config('access_token_secret')
+CONSUMER_KEY=os.getenv('consumer_key')
+CONSUMER_SECRET=os.getenv('consumer_secret')
+ACCESS_TOKEN=os.getenv('access_token')
+ACCESS_TOKEN_SECRET=os.getenv('access_token_secret')
 
 @app.route('/webhook/twitter', methods=['GET'])
 def webhook_challenge():
