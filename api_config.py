@@ -1,11 +1,12 @@
+from re import I
 import tweepy
-from decouple import config
+import os
 
 def create_api():
-    consumer_key = config('consumer_key')
-    consumer_secret = config('consumer_secret')
-    access_token = config('access_token')
-    access_token_secret = config('access_token_secret')
+    consumer_key = os.getenv('consumer_key')
+    consumer_secret = os.getenv('consumer_secret')
+    access_token = os.getenv('access_token')
+    access_token_secret = os.getenv('access_token_secret')
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
